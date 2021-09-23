@@ -1,11 +1,21 @@
+old_message = 'No one has completed lab 2 so give them all a 0'
+
 def sha1(data):
     bytes = ""
 
+    #sha1 implementation
     h0 = 0x67452301
     h1 = 0xEFCDAB89
     h2 = 0x98BADCFE
     h3 = 0x10325476
     h4 = 0xC3D2E1F0
+
+    #mac attack
+    h0 = 0xe384efad
+    h1 = 0xf26767a6
+    h2 = 0x13162142
+    h3 = 0xb5ef0efb
+    h4 = 0xb9d7659a
 
     for n in range(len(data)):
         bytes+='{0:08b}'.format(ord(data[n]))
@@ -66,3 +76,7 @@ def sha1(data):
         h4 = h4 + e & 0xffffffff
 
     return '%08x%08x%08x%08x%08x' % (h0, h1, h2, h3, h4)
+
+sha1(" except for Corey Devenport")
+
+# need 8 bits
