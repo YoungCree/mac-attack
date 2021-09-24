@@ -24,8 +24,8 @@ def sha1(data):
     #pad until length equals 448 mod 512
     while len(pBits)%512 != 448:
         pBits+="0"
-    #append the original length
-    pBits+='{0:064b}'.format(len(bits)-1)
+    #append the original length add previous message length + padding here 1024
+    pBits+='{0:064b}'.format(len(bits)+1024-1)
 
     def chunks(l, n):
         return [l[i:i+n] for i in range(0, len(l), n)]
@@ -77,6 +77,16 @@ def sha1(data):
 
     return '%08x%08x%08x%08x%08x' % (h0, h1, h2, h3, h4)
 
-sha1(" except for Corey Devenport")
+ext_str = " except for Corey Devenport"
+ext = sha1(ext_str)
+print(ext)
+print(ext_str.encode('utf-8'))
+old_msg_hex = ''.join('{:02x}'.format(x) for x in old_message.encode('ascii'))
+new_msg_hex = ''.join('{:02x}'.format(x) for x in ext_str.encode('ascii'))
+padding = '80'
+for i in range(56):
+    padding += '00'
 
-# need 8 bits
+old_size = "00000000000001f8"
+new_message_str = old_msg_hex + padding + old_size + new_msg_hex
+print(new_message_str)
